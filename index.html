@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="reset.css">
+        <div class = "top">
+            <h1>
+                ETCH-A-SKETCH
+            </h1>
+        </div>
+    </head>
+
+    <body>
+        <div class="grid_flex">
+            
+        </div>
+    </body>
+
+
+    <script>
+        
+        const grid = document.querySelector(".grid_flex");
+        
+
+        
+        const max_boxes = 16 * 16;
+
+        for(var i = 0; i < max_boxes; i++)
+        {
+            const box = document.createElement("div");
+            box.setAttribute("class", "gridbox");
+            box.style.display = "inline-block";
+            box.style.flex = "1";
+            box.style.border = "none";
+
+            grid.appendChild(box);
+        }
+    </script>
+
+</html>
