@@ -20,20 +20,53 @@
     <script>
         
         const grid = document.querySelector(".grid_flex");
-        
+        const max_boxes = 16, max_columns = 16;
 
-        
-        const max_boxes = 16 * 16;
-
-        for(var i = 0; i < max_boxes; i++)
+        for(var j = 0; j < max_columns; j++)
         {
-            const box = document.createElement("div");
-            box.setAttribute("class", "gridbox");
-            box.style.display = "inline-block";
-            box.style.flex = "1";
-            box.style.border = "none";
+            const grid_col = document.createElement("div");
 
-            grid.appendChild(box);
+            //grid_col.style.display = "inline-flex";
+            grid_col.style.flex = "1";
+            
+            for(var i = 0; i < max_boxes; i++)
+            {
+                const box = document.createElement("div");
+                box.setAttribute("class", "gridbox");
+                box.style.flex = "1";
+                box.style.height = "5%";
+                isDrawing = false;
+
+                box.addEventListener("mousedown", function(e)
+                {
+                    console.log(e);
+                    if(e.srcElement.style.backgroundColor !== "grey")
+                    {
+                        e.srcElement.style.backgroundColor = "grey";
+                    }
+                    isDrawing = true;
+                });
+
+                box.addEventListener("mousemove", function(e)
+                {
+                    if(isDrawing && e.srcElement.style.backgroundColor !== "grey")
+                    {
+                        e.srcElement.style.backgroundColor = "grey";
+                    }
+                });
+                box.addEventListener("mouseup", function(e)
+                {
+                    isDrawing = false;
+                });
+                
+                box.style.border = "solid";
+
+                grid_col.appendChild(box);
+            }
+            grid.appendChild(grid_col);
+
+
+
         }
     </script>
 
