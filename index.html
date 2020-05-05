@@ -14,60 +14,94 @@
         <div class="grid_flex">
             
         </div>
+
+
+        <div class = "buttons">
+            <button id = "reset" type="button">
+                Reset
+            </button>
+
+            <button id = "clear">
+                Clear
+            </button>
+        </div>
     </body>
 
 
     <script>
-        
         const grid = document.querySelector(".grid_flex");
-        const max_boxes = 16, max_columns = 16;
+        var total = 0;
 
-        for(var j = 0; j < max_columns; j++)
+        function renderGrid()
         {
-            const grid_col = document.createElement("div");
+            const max_boxes = prompt("How many boxes per row of the etch-a-sketch?");
+            const max_columns = prompt("How many columns in total?");
+        
+            total = max_boxes * max_columns
 
-            //grid_col.style.display = "inline-flex";
-            grid_col.style.flex = "1";
-            
-            for(var i = 0; i < max_boxes; i++)
+            var grid_template_columns = "1fr";
+
+            for(var tmp_col_fr = 1; tmp_col_fr < max_boxes; tmp_col_fr++) grid_template_columns += " 1fr";
+            grid.style.gridTemplateColumns = grid_template_columns;
+
+            for(var i = 0; i < total; i++)
             {
-                const box = document.createElement("div");
-                box.setAttribute("class", "gridbox");
-                box.style.flex = "1";
-                box.style.height = "5%";
-                isDrawing = false;
+                const gridbox = document.createElement("div");
+                var isDrawing = false;
 
-                box.addEventListener("mousedown", function(e)
-                {
-                    console.log(e);
-                    if(e.srcElement.style.backgroundColor !== "grey")
+                gridbox.style.userDrag = "none";
+
+                gridbox.addEventListener("mousedown", function(e)
                     {
-                        e.srcElement.style.backgroundColor = "grey";
-                    }
-                    isDrawing = true;
-                });
+                        console.log(e);
+                        if(e.srcElement.style.backgroundColor !== "grey")
+                        {
+                            e.srcElement.style.backgroundColor = "grey";
+                        }
+                        isDrawing = true;
+                    });
 
-                box.addEventListener("mousemove", function(e)
-                {
-                    if(isDrawing && e.srcElement.style.backgroundColor !== "grey")
+                    gridbox.addEventListener("mousemove", function(e)
                     {
-                        e.srcElement.style.backgroundColor = "grey";
-                    }
-                });
-                box.addEventListener("mouseup", function(e)
-                {
-                    isDrawing = false;
-                });
-                
-                box.style.border = "solid";
+                        if(isDrawing && e.srcElement.style.backgroundColor !== "grey")
+                        {
+                            e.srcElement.style.backgroundColor = "grey";
+                        }
+                    });
+                    gridbox.addEventListener("mouseup", function(e)
+                    {
+                        isDrawing = false;
+                    });
 
-                grid_col.appendChild(box);
+                    grid.appendChild(gridbox);
             }
-            grid.appendChild(grid_col);
-
-
-
         }
+
+        renderGrid();
+
+        const clear = document.querySelector("#clear");
+        const reset = document.querySelector("#reset");
+        var allboxes = grid.children;
+
+        clear.onclick = function()
+        {
+            var allboxes = grid.children;
+            for(var child_itr = 0; child_itr < total; child_itr++)
+            {
+                allboxes[child_itr].style.backgroundColor = "white";
+            }
+        };
+
+        reset.onclick = function()
+        {
+            var child = grid.lastElementChild;
+            while(child)
+            {
+                grid.removeChild(grid.lastChild);
+                child = grid.lastElementChild;
+            }
+            renderGrid();
+        };
     </script>
 
 </html>

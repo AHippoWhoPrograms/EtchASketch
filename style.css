@@ -1,7 +1,8 @@
 
 .grid_flex{
-    display: flex;
+    display: grid;
     height: 90%;
+    border: solid;
 }
 html{
     width: 100%;
@@ -11,4 +12,13 @@ html{
 body{
     width: 100%;
     height: 100%;
+}
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button{
+    margin: 5px;
+    padding: 5px;
 }
