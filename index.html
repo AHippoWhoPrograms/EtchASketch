@@ -4,14 +4,14 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="reset.css">
         <div class = "top">
-            <h1>
+            <h1 class="title">
                 ETCH-A-SKETCH
             </h1>
         </div>
     </head>
 
     <body>
-        <div class="grid_flex">
+        <div class="grid_flex" draggable="false">
             
         </div>
 
@@ -41,19 +41,17 @@
 
             var grid_template_columns = "1fr";
 
+            //setting up the grid-template-columns property of css.
             for(var tmp_col_fr = 1; tmp_col_fr < max_boxes; tmp_col_fr++) grid_template_columns += " 1fr";
             grid.style.gridTemplateColumns = grid_template_columns;
 
+            //rendering the grid...
             for(var i = 0; i < total; i++)
             {
                 const gridbox = document.createElement("div");
-                var isDrawing = false;
-
-                gridbox.style.userDrag = "none";
-
-                gridbox.addEventListener("mousedown", function(e)
+                var isDrawing = false;    
+                    gridbox.addEventListener("mousedown", function(e)
                     {
-                        console.log(e);
                         if(e.srcElement.style.backgroundColor !== "grey")
                         {
                             e.srcElement.style.backgroundColor = "grey";
@@ -61,8 +59,17 @@
                         isDrawing = true;
                     });
 
+                    /*gridbox.addEventListener("dragenter", function(e)
+                    {
+                        console.log(e);
+                        if(isDrawing && e.toElement.style.backgroundColor !== "grey")
+                        {
+                            e.toElement.style.backgroundColor = "grey";
+                        }
+                    });*/
                     gridbox.addEventListener("mousemove", function(e)
                     {
+                        console.log(e);
                         if(isDrawing && e.srcElement.style.backgroundColor !== "grey")
                         {
                             e.srcElement.style.backgroundColor = "grey";
@@ -73,8 +80,20 @@
                         isDrawing = false;
                     });
 
+                    gridbox.addEventListener("dragend", function(e)
+                    {
+                        isDrawing = false;
+                    });
+
                     grid.appendChild(gridbox);
             }
+
+            //adjusting the border radii of the corners.
+            var allboxes = grid.children;
+            allboxes[0].style.borderTopLeftRadius = "3vw";
+            allboxes[max_boxes - 1].style.borderTopRightRadius = "3vw";
+            allboxes[allboxes.length - 1].style.borderBottomRightRadius = "3vw";
+            allboxes[allboxes.length - max_boxes].style.borderBottomLeftRadius = "3vw";
         }
 
         renderGrid();
